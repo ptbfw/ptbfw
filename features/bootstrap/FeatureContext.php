@@ -7,17 +7,13 @@ use Behat\Behat\Context\ClosuredContextInterface,
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
+require __DIR__.'/_lib/_classLoader.php';
 
 /**
  * Features context.
  */
-class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext
+
+class FeatureContext extends \ptbf\FeatureContext
 {
     /**
      * Initializes context.
@@ -30,15 +26,4 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext
         // Initialize your context here
     }
 
-//
-// Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
-//    public function iHaveDoneSomethingWith($argument)
-//    {
-//        doSomethingWith($argument);
-//    }
-//
 }
