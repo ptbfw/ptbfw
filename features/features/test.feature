@@ -1,4 +1,17 @@
-Feature: test
-Scenario: test
+Feature: my 1st feature
 
-When blablabla
+Scenario: go to wikipedia
+Given I am on "http://www.wikipedia.org/"
+Then fail
+
+Scenario: go to wikipedia
+Given I am on "http://www.wikipedia.org/"
+Then fail
+
+Scenario: go to wikipedia
+Given I am on "http://www.wikipedia.org/"
+Then fail
+
+Scenario: go to wikipedia
+Given I am on "http://www.wikipedia.org/"
+Then fail

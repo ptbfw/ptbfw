@@ -7,13 +7,13 @@ use Behat\Behat\Context\ClosuredContextInterface,
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
-require __DIR__.'/_lib/_classLoader.php';
+require __DIR__.'/_classLoader.php';
 
 /**
  * Features context.
  */
 
-class FeatureContext extends \ptbf\FeatureContext
+class FeatureContext extends \Ptbf\Context\FeatureContext
 {
     /**
      * Initializes context.
@@ -21,9 +21,10 @@ class FeatureContext extends \ptbf\FeatureContext
      *
      * @param   array   $parameters     context parameters (set them up through behat.yml)
      */
-    public function __construct(array $parameters)
-    {
-        // Initialize your context here
-    }
+	
+	function __construct($options) {
+		parent::__construct($options);
+	}
+
 
 }
