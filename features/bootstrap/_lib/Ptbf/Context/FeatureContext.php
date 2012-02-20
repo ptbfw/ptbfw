@@ -32,6 +32,7 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 		$mink = self::$mink;
 		if ($mink === NULL) {
 			$mink = new \Ptbf\Mink\Mink();
+//			$mink = new \Behat\Mink\Mink();
 			self::$mink = $mink;
 		}
 		return $mink;
@@ -76,19 +77,45 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 
 		$mink = $this->getMink();
 
-		switch ($options['default_session']) {
-			case 'chrome':
-				$driver = new \Behat\Mink\Driver\SahiDriver($options['default_session']);
+		$sessionsOptions = $options['sessions']?:NULL;
+		
+			/**
+			 * Mink session if session name contains
+			 * 
+			 * mink
+			 * IE, internet, explorer
+			 * safari
+			 * chrom(e|ium)
+			 * opera
+			 * firefox
+			 */
+			if (preg_match('/(?:(mink|ie|firefox|chrom||safari|internet|explorer|opera))/i', $options['default_session'])) {
+				$client = null;
+				
+				if (isset($sessionsOptions[$options['default_session']])) {
+					$currentSessionOptions = $sessionsOptions[$options['default_session']];
+					if (isset($currentSessionOptions['port'])) {
+						$port = $currentSessionOptions['port'];
+					} else {
+						$port = 9999;
+					}
+					
+					$connection = new \Behat\SahiClient\Connection(null, $currentSessionOptions['host'], $port);
+					$client = new \Behat\SahiClient\Client($connection);
+				} else {
+					$client = null;
+				}
+				
+				$driver = new \Behat\Mink\Driver\SahiDriver($options['default_session'], $client);
 				$session = new \Behat\Mink\Session($driver);
 				$session->start();
 				$session->visit($options['base_url']);
 				$mink->registerSession($options['default_session'], $session);
-				break;
-
-			default:
-				throw new Exception("driver {$options['default_session']} not implemented");
-				break;
-		}
+			} else {
+				throw new Exception('goutte session not implemented');
+				// @TODO
+				$driver = new \Behat\Mink\Driver\GoutteDriver();
+			}
 		$mink->setDefaultSessionName($options['default_session']);
 		
 		// @TODO uncomment when its ready
@@ -116,7 +143,7 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 		return self::$options[$name];
 	}
 
-	/*
+	/**
 	 * used by Mink
 	 */
 	public function getParameters() {

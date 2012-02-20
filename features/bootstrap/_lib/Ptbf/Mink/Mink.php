@@ -11,6 +11,6 @@ class Mink extends \Behat\Mink\Mink{
 
 	public function __destruct() {
 		// do not stop browsers
-		//parent::__destruct();
+//		parent::__destruct();
 	}
 }

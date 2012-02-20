@@ -3,7 +3,7 @@ default:
     context:
         parameters:
             base_url: 'http://google.com/'
-            default_session: 'chrome'
+            default_session: 'opera'
             
             db_init:
               local_service:
@@ -20,3 +20,11 @@ default:
                 user: 'behat2'
                 password: '1'
                 database: 'behatTwo'
+                
+            sessions:
+              ie8:
+                host: '192.168.1.57'
+                port: 9999
+                
+              opera:
+                host: '192.168.1.57'

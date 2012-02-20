@@ -1,3 +1,8 @@
-version ALPHA 0.0
+v 0.1
+* session options moved in .yml config
+* session options are: session name, host, port; check example behat.yml
+
+version 0.0
+project init
 
 po_taka's Behat FrameWork
