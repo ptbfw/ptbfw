@@ -2,19 +2,19 @@ default:
 default:
     context:
         parameters:
-            baseUrl: 'http://google.com/'
+            base_url: 'http://google.com/'
             default_session: 'chrome'
             
-            dbInit:
-              localService:
+            db_init:
+              local_service:
                 type: 'mysql'
                 host: 'localhost'
                 user: 'behat'
                 password: '1'
                 database: 'behat'
                 port: 3306
-                initCommand: 'SET NAMES "UTF8"'
-              localServiceApi:
+                init_command: 'SET NAMES "UTF8"'
+              local_service_api:
                 type: 'mysql'
                 host: 'localhost'
                 user: 'behat2'

@@ -29,8 +29,8 @@ class Mysql extends AbstractDriver{
 		$pdoOptions = array(
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 		);
-		if (isset($options['initCommand'])) {
-			$pdoOptions[PDO::MYSQL_ATTR_INIT_COMMAND] = $options['initCommand'];
+		if (isset($options['init_command'])) {
+			$pdoOptions[PDO::MYSQL_ATTR_INIT_COMMAND] = $options['init_command'];
 		}
 		
 		
@@ -39,7 +39,7 @@ class Mysql extends AbstractDriver{
 	}
 	
 	public function reset(){
-		throw new Exception('not implemented');
+		throw new \Exception('not implemented');
 	}
 
 }
