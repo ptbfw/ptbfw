@@ -3,7 +3,7 @@ default:
     context:
         parameters:
             base_url: 'http://google.com/'
-            default_session: 'opera'
+            default_session: 'chrome'
             
             db_init:
               local_service:
@@ -13,6 +13,7 @@ default:
                 password: '1'
                 database: 'behat'
                 port: 3306
+                directory: 'local'
                 init_command: 'SET NAMES "UTF8"'
               local_service_api:
                 type: 'mysql'

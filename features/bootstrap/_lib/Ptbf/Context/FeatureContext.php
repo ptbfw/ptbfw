@@ -118,8 +118,7 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 			}
 		$mink->setDefaultSessionName($options['default_session']);
 		
-		// @TODO uncomment when its ready
-		//$this->databaseReset();
+		$this->databaseReset();
 		
 	}
 
