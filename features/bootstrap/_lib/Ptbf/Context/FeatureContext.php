@@ -22,6 +22,29 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 
 	function __construct($options) {
 		self::$options = $options;
+
+		// load all context files
+		if (isset($options['context_dir'])) {
+			foreach ($options['context_dir'] as $nameSpace => $directory) {
+				if (!preg_match('/^\\\\/', $nameSpace)) {
+					$nameSpace = '\\' . $nameSpace;
+				}
+				
+				if (!preg_match('/\\\\$/', $nameSpace)) {
+					$nameSpace = $nameSpace . '\\';
+				}
+				
+				$finder = new \Symfony\Component\Finder\Finder();
+				$contextDir = __DIR__ . '/../../../' . $directory;
+				$contextDir = realpath($contextDir);
+				foreach ($finder->files()->name('*.php')->sortByName()->in($contextDir) as $file) {
+					/* @var $file \Symfony\Component\Finder\SplFileInfo */
+					$contextName = preg_replace('/\.php$/', '', $file->getFilename());
+					$contextFullClassName = $nameSpace . $contextName;
+					$this->useContext($contextFullClassName, new $contextFullClassName($this->getParameters()));
+				}
+			}
+		}
 	}
 
 	public function getMink() {
@@ -32,7 +55,6 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 		$mink = self::$mink;
 		if ($mink === NULL) {
 			$mink = new \Ptbf\Mink\Mink();
-//			$mink = new \Behat\Mink\Mink();
 			self::$mink = $mink;
 		}
 		return $mink;
@@ -51,9 +73,11 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 	 * we moved this to before scenario step
 	 * becouse you can stop/change some sessions during scenario
 	 */
-	public function prepareMinkSessions($event){}
-	
-	/** 
+	public function prepareMinkSessions($event) {
+		
+	}
+
+	/**
 	 * 
 	 * Restore mink sessions from config
 	 * Restart database
@@ -77,49 +101,48 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 
 		$mink = $this->getMink();
 
-		$sessionsOptions = $options['sessions']?:NULL;
-		
-			/**
-			 * Mink session if session name contains
-			 * 
-			 * mink
-			 * IE, internet, explorer
-			 * safari
-			 * chrom(e|ium)
-			 * opera
-			 * firefox
-			 */
-			if (preg_match('/(?:(mink|ie|firefox|chrom||safari|internet|explorer|opera))/i', $options['default_session'])) {
-				$client = null;
-				
-				if (isset($sessionsOptions[$options['default_session']])) {
-					$currentSessionOptions = $sessionsOptions[$options['default_session']];
-					if (isset($currentSessionOptions['port'])) {
-						$port = $currentSessionOptions['port'];
-					} else {
-						$port = 9999;
-					}
-					
-					$connection = new \Behat\SahiClient\Connection(null, $currentSessionOptions['host'], $port);
-					$client = new \Behat\SahiClient\Client($connection);
+		$sessionsOptions = $options['sessions']? : NULL;
+
+		/**
+		 * Mink session if session name contains
+		 * 
+		 * mink
+		 * IE, internet, explorer
+		 * safari
+		 * chrom(e|ium)
+		 * opera
+		 * firefox
+		 */
+		if (preg_match('/(?:(mink|ie|firefox|chrom||safari|internet|explorer|opera))/i', $options['default_session'])) {
+			$client = null;
+
+			if (isset($sessionsOptions[$options['default_session']])) {
+				$currentSessionOptions = $sessionsOptions[$options['default_session']];
+				if (isset($currentSessionOptions['port'])) {
+					$port = $currentSessionOptions['port'];
 				} else {
-					$client = null;
+					$port = 9999;
 				}
-				
-				$driver = new \Behat\Mink\Driver\SahiDriver($options['default_session'], $client);
-				$session = new \Behat\Mink\Session($driver);
-				$session->start();
-				$session->visit($options['base_url']);
-				$mink->registerSession($options['default_session'], $session);
+
+				$connection = new \Behat\SahiClient\Connection(null, $currentSessionOptions['host'], $port);
+				$client = new \Behat\SahiClient\Client($connection);
 			} else {
-				throw new Exception('goutte session not implemented');
-				// @TODO
-				$driver = new \Behat\Mink\Driver\GoutteDriver();
+				$client = null;
 			}
+
+			$driver = new \Behat\Mink\Driver\SahiDriver($options['default_session'], $client);
+			$session = new \Behat\Mink\Session($driver);
+			$session->start();
+			$session->visit($options['base_url']);
+			$mink->registerSession($options['default_session'], $session);
+		} else {
+			throw new Exception('goutte session not implemented');
+			// @TODO
+			$driver = new \Behat\Mink\Driver\GoutteDriver();
+		}
 		$mink->setDefaultSessionName($options['default_session']);
-		
+
 		$this->databaseReset();
-		
 	}
 
 	public function databaseReset() {

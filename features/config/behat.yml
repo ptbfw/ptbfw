@@ -2,6 +2,11 @@ default:
 default:
     context:
         parameters:
+            context_dir: 
+              '\':           '_lib/ExmapleSite/Context'
+              '\siteTwo\':  '_lib/ExampleSiteTwo/Context'
+            
+          
             base_url: 'http://google.com/'
             default_session: 'chrome'
             
