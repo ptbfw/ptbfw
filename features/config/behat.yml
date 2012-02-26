@@ -10,7 +10,7 @@ default:
             base_url: 'http://google.com/'
             default_session: 'chrome'
             
-            db_init:
+            init:
               local_service:
                 type: 'mysql'
                 host: 'localhost'

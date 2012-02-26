@@ -88,9 +88,12 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 		$options = $this->getParameters();
 		$drivers = array();
 
-		if (isset($options['db_init'])) {
-			foreach ($options['db_init'] as $service => $ServiceOptions) {
-				$driverName = 'ptbf\\Database\\' . ucfirst($ServiceOptions['type']);
+		if (isset($options['init'])) {
+			foreach ($options['init'] as $service => $ServiceOptions) {
+				// add namespace only for ptbf components
+				if (!preg_match('/\\\\/', $ServiceOptions['type'])) {
+					$driverName = 'ptbf\\Init\\' . ucfirst($ServiceOptions['type']);
+				}
 				if (array_key_exists($service, $drivers)) {
 					throw new Exception("driver {$service} already registered");
 				}

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ptbf\Database;
+namespace Ptbf\Init;
 
-use Ptbf\Database\AbstractDriver,
+use Ptbf\Init\Init,
 	\PDO,
 	\Symfony\Component\Finder\Finder	
 		;
@@ -12,7 +12,7 @@ use Ptbf\Database\AbstractDriver,
  *
  * @author Angel Koilov
  */
-class Mysql extends AbstractDriver {
+class Mysql extends Init {
 
 	private $directory;
 	private $pdo;
