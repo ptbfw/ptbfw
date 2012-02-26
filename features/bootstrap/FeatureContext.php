@@ -22,7 +22,7 @@ class FeatureContext extends \Ptbf\Context\FeatureContext
      * @param   array   $parameters     context parameters (set them up through behat.yml)
      */
 	
-	function __construct($options) {
+	public function __construct($options) {
 		parent::__construct($options);
 	}
 
