@@ -40,6 +40,10 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 				foreach ($finder->files()->name('*.php')->sortByName()->in($contextDir) as $file) {
 					/* @var $file \Symfony\Component\Finder\SplFileInfo */
 					$contextName = preg_replace('/\.php$/', '', $file->getFilename());
+					$relativePath = preg_replace('/^' . preg_quote($contextDir, '/') . '/', '', $file->getRealPath());
+					$relativePath = preg_replace('#/#', '\\', $relativePath);
+					$relativePath = ltrim($relativePath, '\\');
+					$contextName = preg_replace('/\.php$/', '', $relativePath);
 					$contextFullClassName = $nameSpace . $contextName;
 					$this->useContext($contextFullClassName, new $contextFullClassName($this->getParameters()));
 				}
