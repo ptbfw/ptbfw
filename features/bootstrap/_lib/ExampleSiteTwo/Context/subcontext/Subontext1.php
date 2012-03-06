@@ -2,11 +2,10 @@
 
 namespace siteTwo\subcontext;
 
-class Subontext1 extends \Behat\Behat\Context\BehatContext {
+use Behat\Behat\Context\Step\Then,
+	Behat\Behat\Exception\UndefinedException;
 
-	public function __construct(array $parameters) {
-		
-	}
+class Subontext1 extends \Behat\Behat\Context\BehatContext {
 
 	/**
 	 * @Given /^some non-existing step test$/ 

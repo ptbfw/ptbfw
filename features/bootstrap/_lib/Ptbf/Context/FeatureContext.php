@@ -45,7 +45,7 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 					$relativePath = ltrim($relativePath, '\\');
 					$contextName = preg_replace('/\.php$/', '', $relativePath);
 					$contextFullClassName = $nameSpace . $contextName;
-					$this->useContext($contextFullClassName, new $contextFullClassName($this->getParameters()));
+					$this->useContext($contextFullClassName, new $contextFullClassName($this));
 				}
 			}
 		}
