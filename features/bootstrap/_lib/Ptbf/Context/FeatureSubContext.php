@@ -5,7 +5,8 @@ namespace Ptbf\Context;
 /**
  * All sub-contexts should extend this class
  *
- * @author Angel Koilov <ange.koilov@gmail.com>
+ * @author Angel Koilov <angel.koilov@gmail.com>
+ * @method  Behat\Mink\Element\DocumentElement getPage() return session page
  */
 class FeatureSubContext extends \Behat\Behat\Context\BehatContext {
 
