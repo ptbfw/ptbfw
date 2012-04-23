@@ -27,10 +27,13 @@ default:
                 password: '1'
                 database: 'behatTwo'
                 
+            sessions_restart: 'restart'
             sessions:
-              ie8:
-                host: '192.168.1.57'
-                port: 9999
-                
-              opera:
-                host: '192.168.1.57'
+#              ie8:
+#                host: '192.168.1.57'
+#                port: 9999
+#                
+#              opera:
+#                host: '192.168.1.57'
+
+              chrome:

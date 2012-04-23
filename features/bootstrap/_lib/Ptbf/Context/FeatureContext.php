@@ -75,7 +75,7 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 	/**
 	 * override default mink hook
 	 * we moved this to before scenario step
-	 * becouse you can stop/change some sessions during scenario
+	 * because you can stop/change some sessions during scenario
 	 */
 	public function prepareMinkSessions($event) {
 		
@@ -87,6 +87,7 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 	 * Restart database
 	 * 
 	 * @BeforeScenario 
+	 * @param \Behat\Behat\Event\ScenarioEvent $event
 	 */
 	public function before($event) {
 		$options = $this->getParameters();
@@ -106,9 +107,22 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 			self::$databaseDrivers = $drivers;
 		}
 
+		$this->sessionRestart($event->getScenario());
+		$this->databaseReset();
+	}
+
+	/**
+	 * restart sessoins
+	 */
+	private function sessionRestart(\Behat\Gherkin\Node\ScenarioNode $scenario) {
+
+		$options = self::$options;
 		$mink = $this->getMink();
 
 		$sessionsOptions = $options['sessions']? : NULL;
+		$sessionsOptionsRestartMethod = isset($options['sessions_restart']) ? $options['sessions_restart'] : 'reset';
+		$sessionsOptionsRestartMethod .= 'Sessions';
+		$mink->$sessionsOptionsRestartMethod();
 
 		/**
 		 * Mink session if session name contains
@@ -148,8 +162,6 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 			$driver = new \Behat\Mink\Driver\GoutteDriver();
 		}
 		$mink->setDefaultSessionName($options['default_session']);
-
-		$this->databaseReset();
 	}
 
 	public function databaseReset() {
