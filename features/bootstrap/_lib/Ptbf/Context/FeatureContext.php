@@ -87,6 +87,7 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 	 * Restart database
 	 * 
 	 * @BeforeScenario 
+	 * @param \Behat\Behat\Event\ScenarioEvent $event
 	 */
 	public function before($event) {
 		$options = $this->getParameters();
@@ -106,9 +107,31 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 			self::$databaseDrivers = $drivers;
 		}
 
+		$this->sessionRestart($event->getScenario());
+		$this->databaseReset();
+	}
+
+	/**
+	 * restart sessoins
+	 */
+	private function sessionRestart(\Behat\Gherkin\Node\ScenarioNode $scenario) {
+
+		$options = self::$options;
+		$skipRestart = $scenario->hasTag('skipSessionRestart') || $scenario->hasTag('continue');
+		if ($scenario->hasTag('forceSessionRestart')) {
+			$skipRestart = false;
+		}
+
+		if ($skipRestart) {
+			return true;
+		}
+
 		$mink = $this->getMink();
 
 		$sessionsOptions = $options['sessions']? : NULL;
+		$sessionsOptionsRestartMethod = isset($options['sessions_restart']) ? $options['sessions_restart'] : 'reset';
+		$sessionsOptionsRestartMethod .= 'Sessions';
+		$mink->$sessionsOptionsRestartMethod();
 
 		/**
 		 * Mink session if session name contains
@@ -148,8 +171,6 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 			$driver = new \Behat\Mink\Driver\GoutteDriver();
 		}
 		$mink->setDefaultSessionName($options['default_session']);
-
-		$this->databaseReset();
 	}
 
 	public function databaseReset() {
