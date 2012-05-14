@@ -1,5 +1,4 @@
 default:
-default:
     context:
         parameters:
             context_dir: 
@@ -8,7 +7,7 @@ default:
             
           
             base_url: 'http://google.com/'
-            default_session: 'chrome'
+            default_session: 'firefox'
             
             init:
               local_service:
@@ -27,7 +26,6 @@ default:
                 password: '1'
                 database: 'behatTwo'
                 
-            sessions_restart: 'restart'
             sessions:
 #              ie8:
 #                host: '192.168.1.57'

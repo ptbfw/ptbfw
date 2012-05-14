@@ -29,11 +29,11 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 				if (!preg_match('/^\\\\/', $nameSpace)) {
 					$nameSpace = '\\' . $nameSpace;
 				}
-				
+
 				if (!preg_match('/\\\\$/', $nameSpace)) {
 					$nameSpace = $nameSpace . '\\';
 				}
-				
+
 				$finder = new \Symfony\Component\Finder\Finder();
 				$contextDir = __DIR__ . '/../../../' . $directory;
 				$contextDir = realpath($contextDir);
@@ -107,22 +107,18 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 			self::$databaseDrivers = $drivers;
 		}
 
-		$this->sessionRestart($event->getScenario());
+		$this->sessionRestart();
 		$this->databaseReset();
 	}
 
 	/**
 	 * restart sessoins
 	 */
-	private function sessionRestart(\Behat\Gherkin\Node\ScenarioNode $scenario) {
+	private function sessionRestart() {
 
 		$options = self::$options;
 		$mink = $this->getMink();
-
-		$sessionsOptions = $options['sessions']? : NULL;
-		$sessionsOptionsRestartMethod = isset($options['sessions_restart']) ? $options['sessions_restart'] : 'reset';
-		$sessionsOptionsRestartMethod .= 'Sessions';
-		$mink->$sessionsOptionsRestartMethod();
+		$mink->restartSessions();
 
 		/**
 		 * Mink session if session name contains
@@ -142,16 +138,16 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 				if (isset($currentSessionOptions['port'])) {
 					$port = $currentSessionOptions['port'];
 				} else {
-					$port = 9999;
+					$port = 4444;
 				}
 
-				$connection = new \Behat\SahiClient\Connection(null, $currentSessionOptions['host'], $port);
-				$client = new \Behat\SahiClient\Client($connection);
+				$client = new \Selenium\Client($currentSessionOptions['host'], $port);
+				$driver = new \Behat\Mink\Driver\Selenium2Driver($options['default_session']);
 			} else {
 				$client = null;
 			}
 
-			$driver = new \Behat\Mink\Driver\SahiDriver($options['default_session'], $client);
+			$driver = new \Behat\Mink\Driver\Selenium2Driver($options['default_session'], $client);
 			$session = new \Behat\Mink\Session($driver);
 			$session->start();
 			$session->visit($options['base_url']);
