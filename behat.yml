@@ -4,6 +4,7 @@ default:
             context_dir: 
               '\':           '_lib/ExmapleSite/Context'
               '\siteTwo\':  '_lib/ExampleSiteTwo/Context'
+              '\PtbfCommonContext\':  '_lib/PtbfCommonContext/'
             
           
             base_url: 'http://google.com/'

@@ -118,7 +118,7 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 
 		$options = self::$options;
 		$mink = $this->getMink();
-		$mink->restartSessions();
+		$mink->resetSessions();
 
 		/**
 		 * Mink session if session name contains
@@ -133,25 +133,27 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 		if (preg_match('/(?:(mink|ie|firefox|chrom||safari|internet|explorer|opera))/i', $options['default_session'])) {
 			$client = null;
 
-			if (isset($sessionsOptions[$options['default_session']])) {
-				$currentSessionOptions = $sessionsOptions[$options['default_session']];
-				if (isset($currentSessionOptions['port'])) {
-					$port = $currentSessionOptions['port'];
+			if (false == $mink->hasSession($options['default_session'])) {
+				if (isset($sessionsOptions[$options['default_session']])) {
+					$currentSessionOptions = $sessionsOptions[$options['default_session']];
+					if (isset($currentSessionOptions['port'])) {
+						$port = $currentSessionOptions['port'];
+					} else {
+						$port = 4444;
+					}
+
+					$client = new \Selenium\Client($currentSessionOptions['host'], $port);
+					$driver = new \Behat\Mink\Driver\Selenium2Driver($options['default_session']);
 				} else {
-					$port = 4444;
+					$client = null;
 				}
 
-				$client = new \Selenium\Client($currentSessionOptions['host'], $port);
-				$driver = new \Behat\Mink\Driver\Selenium2Driver($options['default_session']);
-			} else {
-				$client = null;
+				$driver = new \Behat\Mink\Driver\Selenium2Driver($options['default_session'], $client);
+				$session = new \Behat\Mink\Session($driver);
+				$session->start();
+				$session->visit($options['base_url']);
+				$mink->registerSession($options['default_session'], $session);
 			}
-
-			$driver = new \Behat\Mink\Driver\Selenium2Driver($options['default_session'], $client);
-			$session = new \Behat\Mink\Session($driver);
-			$session->start();
-			$session->visit($options['base_url']);
-			$mink->registerSession($options['default_session'], $session);
 		} else {
 			throw new Exception('goutte session not implemented');
 			// @TODO
@@ -178,6 +180,14 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 	 */
 	public function getParameter($name) {
 		return self::$options[$name];
+	}
+	
+	/**
+	 *
+	 * @return Behat\Mink\Element\DocumentElement
+	 */
+	public function getPage(){
+		return $this->getSession()->getPage();
 	}
 
 	/**

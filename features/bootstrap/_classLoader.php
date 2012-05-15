@@ -1,8 +1,7 @@
 <?php
-require_once 'mink/autoload.php';
 
 function ptbfAutoLoader ($name) {
-	if (preg_match('/^\\\\?Ptbf/', $name)) {
+	if (preg_match('/^\\\\?Ptbf\\\\/', $name)) {
 		$name = ltrim($name, '\\');
 		$name = preg_replace('/\\\\/', DIRECTORY_SEPARATOR, $name);
 		
