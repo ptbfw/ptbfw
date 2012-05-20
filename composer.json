@@ -1,0 +1,15 @@
+{
+    "require": {
+        "behat/behat": "*",
+        "ptbfw/Selenium2-driver": "master",
+        "fabpot/goutte":                 "*",
+        "alexandresalome/php-selenium":  "*",
+         "facebook/php-webdriver":        "*"
+    },
+    "repositories": {
+        "behat/mink-deps": {
+            "type": "composer",
+            "url":  "behat.org"
+        }
+    }
+}

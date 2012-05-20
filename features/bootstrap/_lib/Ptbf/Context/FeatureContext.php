@@ -148,7 +148,7 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 					$client = null;
 				}
 
-				$driver = new \Behat\Mink\Driver\Selenium2Driver($options['default_session'], $client);
+				$driver = new \Ptbfw\Selenium2Driver\Selenium2Driver();
 				//$session = new \Behat\Mink\Session($driver);
 				$session = new \Ptbf\Mink\Session($driver);
 				$session->start();

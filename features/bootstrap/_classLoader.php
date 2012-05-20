@@ -6,8 +6,9 @@ function ptbfAutoLoader ($name) {
 		$name = preg_replace('/\\\\/', DIRECTORY_SEPARATOR, $name);
 		
 		echo PHP_EOL . 'loading: ' . $name . PHP_EOL;
-		
-		require __DIR__ . '/_lib/' . $name . '.php';
+		if (is_file( __DIR__ . '/_lib/' . $name . '.php')) {
+			require __DIR__ . '/_lib/' . $name . '.php';
+		}
 	}
 }
 
