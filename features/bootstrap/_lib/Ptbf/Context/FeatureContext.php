@@ -182,12 +182,12 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 	public function getParameter($name) {
 		return self::$options[$name];
 	}
-	
+
 	/**
 	 *
 	 * @return Behat\Mink\Element\DocumentElement
 	 */
-	public function getPage(){
+	public function getPage() {
 		return $this->getSession()->getPage();
 	}
 
@@ -196,6 +196,19 @@ class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
 	 */
 	public function getParameters() {
 		return self::$options;
+	}
+
+	/*
+	 * overriden for ajax-save
+	 */
+
+	public function assertPageContainsText($text) {
+		try {
+			parent::assertPageContainsText($text);
+		} catch (\Exception $e) {
+			$this->getSession()->wait(3000);
+			parent::assertPageContainsText($text);
+		}
 	}
 
 }
