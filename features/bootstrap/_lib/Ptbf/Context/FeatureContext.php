@@ -14,7 +14,7 @@ use Behat\Behat\Event\SuiteEvent,
  * 
  * @author Angel Koilov <angel.koilov@gmail.com>
  */
-class FeatureContext extends \Behat\Mink\Behat\Context\BaseMinkContext {
+class FeatureContext extends \Behat\MinkExtension\Context\MinkContext {
 
 	protected static $mink;
 	protected static $options = array();
