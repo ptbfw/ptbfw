@@ -1,12 +1,9 @@
 {
     "require": {
         "behat/behat": "2.4@stable",
-        "ptbfw/Selenium2-driver": "master",
+        "behat/mink-extension": "*",
+       
         "fabpot/goutte":                 "*",
-        "alexandresalome/php-selenium":  "*",
-         "facebook/php-webdriver":        "*",
-         
-         "behat/mink-extension": "*",
-         "behat/mink-selenium2-driver":  "*"
+        "ptbfw/Selenium2-driver": "master"
     }
 }
