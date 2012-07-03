@@ -4,11 +4,12 @@ namespace Ptbf\Init;
 
 use Ptbf\Init\Init,
 	\PDO,
-	\Symfony\Component\Finder\Finder	
-		;
+	\Symfony\Component\Finder\Finder
+
+;
 
 /**
- * Description of MySql
+ * class for MySQL initializtion
  *
  * @author Angel Koilov
  */
@@ -63,14 +64,14 @@ class Mysql extends Init {
 			/* @var $file \Symfony\Component\Finder\SplFileInfo */
 			$sqlCode .= file_get_contents($file->getRealPath());
 		}
-		
+
 		$sqlCode = trim($sqlCode);
 		if (empty($sqlCode)) {
 			return true;
 		}
-		
-		$this->getPdo()->exec($sqlCode);
 
+		$stm = $this->getPdo()->prepare($sqlCode);
+		$stm->execute();
 	}
 
 	public function getDirectory() {
