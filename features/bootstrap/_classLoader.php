@@ -1,12 +1,12 @@
 <?php
 
-function ptbfAutoLoader ($name) {
+function ptbfAutoLoader($name) {
 	if (preg_match('/^\\\\?Ptbf\\\\/', $name)) {
 		$name = ltrim($name, '\\');
 		$name = preg_replace('/\\\\/', DIRECTORY_SEPARATOR, $name);
-		
+
 		echo PHP_EOL . 'loading: ' . $name . PHP_EOL;
-		if (is_file( __DIR__ . '/_lib/' . $name . '.php')) {
+		if (is_file(__DIR__ . '/_lib/' . $name . '.php')) {
 			require __DIR__ . '/_lib/' . $name . '.php';
 		}
 	}
@@ -14,3 +14,5 @@ function ptbfAutoLoader ($name) {
 
 spl_autoload_register('ptbfAutoLoader');
 
+require_once 'PHPUnit/Framework/Assert/Functions.php';
+require_once 'PHPUnit/Autoload.php';
