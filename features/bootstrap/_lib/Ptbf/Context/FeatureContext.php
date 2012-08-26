@@ -14,11 +14,10 @@ use Behat\Behat\Event\SuiteEvent,
  * 
  * @author Angel Koilov <angel.koilov@gmail.com>
  */
-class FeatureContext extends \Behat\MinkExtension\Context\MinkContext {
+class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements \Ptbfw\Initializer\InitializerAwareInterface {
 
 	protected static $mink;
 	protected static $options = array();
-	private static $databaseDrivers = array();
 
 	function __construct($options) {
 		self::$options = $options;
@@ -84,31 +83,12 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext {
 	/**
 	 * 
 	 * Restore mink sessions from config
-	 * Restart database
 	 * 
 	 * @BeforeScenario 
 	 * @param \Behat\Behat\Event\ScenarioEvent $event
 	 */
 	public function before($event) {
-		$options = $this->getParameters();
-		$drivers = array();
-
-		if (isset($options['init'])) {
-			foreach ($options['init'] as $service => $ServiceOptions) {
-				// add namespace only for ptbf components
-				if (!preg_match('/\\\\/', $ServiceOptions['type'])) {
-					$driverName = 'ptbf\\Init\\' . ucfirst($ServiceOptions['type']);
-				}
-				if (array_key_exists($service, $drivers)) {
-					throw new Exception("driver {$service} already registered");
-				}
-				$drivers[$service] = new $driverName($service, $ServiceOptions);
-			}
-			self::$databaseDrivers = $drivers;
-		}
-
 		$this->sessionRestart();
-		$this->databaseReset();
 	}
 
 	/**
@@ -163,15 +143,7 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext {
 		$mink->setDefaultSessionName($options['default_session']);
 	}
 
-	public function databaseReset() {
-		foreach ($this->getDatabaseDrivers() as $d) {
-			$d->reset();
-		}
-	}
 
-	public function getDatabaseDrivers() {
-		return self::$databaseDrivers;
-	}
 
 	/**
 	 * used by Mink

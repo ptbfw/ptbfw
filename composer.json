@@ -5,6 +5,8 @@
         "behat/mink-extension": "*",
        
         "fabpot/goutte":                 "*",
-        "ptbfw/Selenium2-driver": "master"
+	"behat/mink-goutte-driver": "*",
+        "ptbfw/Selenium2-driver": "master",
+        "ptbfw/initializer": "*"
     }
 }

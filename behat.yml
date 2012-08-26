@@ -10,23 +10,6 @@ default:
             base_url: 'http://google.com/'
             default_session: 'firefox'
             
-            init:
-              local_service:
-                type: 'mysql'
-                host: 'localhost'
-                user: 'behat'
-                password: '1'
-                database: 'behat'
-                port: 3306
-                directory: 'local'
-                init_command: 'SET NAMES "UTF8"'
-              local_service_api:
-                type: 'mysql'
-                host: 'localhost'
-                user: 'behat2'
-                password: '1'
-                database: 'behatTwo'
-                
             sessions:
 #              ie8:
 #                host: '192.168.1.57'
@@ -36,8 +19,24 @@ default:
 #                host: '192.168.1.57'
 
               chrome:
-extensions:
-    Behat\MinkExtension\Extension:
-      base_url:  'http://example.com'
-      goutte:    ~
-      selenium2: ~
+    extensions:
+      Ptbfw\Initializer\Extension:
+          local_service:
+                type: 'mysql'
+                host: 'localhost'
+                user: 'behat'
+                password: '1'
+                database: 'behat'
+                port: 3306
+                directory: 'local'
+                init_command: 'SET NAMES "UTF8"'
+          local_service_api:
+                type: 'mysql'
+                host: 'localhost'
+                user: 'behat2'
+                password: '1'
+                database: 'behatTwo'
+      Behat\MinkExtension\Extension:
+        base_url:  'http://example.com'
+        goutte:    ~
+        selenium2: ~
