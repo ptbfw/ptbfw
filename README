@@ -1,7 +1,10 @@
-V 0.2
 Added support for internal Context files
 
-V 0.1.1
+Dev: dev use Initizlier extension
+
+V 0.1
+
+!!! This version use integrated Init(er) !!!
 * mysql driver finished
 Example config:
 db_init:
