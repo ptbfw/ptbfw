@@ -30,6 +30,15 @@ default:
                 port: 3306
                 directory: 'local'
                 init_command: 'SET NAMES "UTF8"'
+          full_path_test:
+                type: 'mysql'
+                host: 'localhost'
+                user: 'behat2'
+                password: '1'
+                database: 'behatTwo'
+                port: 3306
+                directory: '/var/www/ptbfw/features/bootstrap/database/test_full_path/'
+                init_command: 'SET NAMES "UTF8"'
           local_service_api:
                 type: 'mysql'
                 host: 'localhost'
