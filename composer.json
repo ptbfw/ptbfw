@@ -1,12 +1,15 @@
 {
+	"name": "ptbfw/ptbfw",
+    "type": "framework",
+    "description": "wrapper of selenium2-driver",
 	"minimum-stability" : "dev",
     "require": {
         "behat/behat": "2.4@stable",
         "behat/mink-extension": "*",
        
-        "fabpot/goutte":                 "*",
-	"behat/mink-goutte-driver": "*",
-        "ptbfw/Selenium2-driver": "master",
-        "ptbfw/initializer": "*"
+        "fabpot/goutte":             "*",
+	    "behat/mink-goutte-driver":  "*",
+        "ptbfw/Selenium2-driver":    "master",
+        "ptbfw/initializer":         "*"
     }
 }

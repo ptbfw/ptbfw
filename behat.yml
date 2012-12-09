@@ -45,7 +45,15 @@ default:
                 user: 'behat2'
                 password: '1'
                 database: 'behatTwo'
-      Behat\MinkExtension\Extension:
-        base_url:  'http://example.com'
-        goutte:    ~
-        selenium2: ~
+                directory: 'local_service_api'
+          test:
+            type: 'Executer'
+            commands:
+              - "ls"
+              - "whoami"
+          memcached:
+            type: Memcached
+            servers:
+              localServer:
+                host: localhost
+
