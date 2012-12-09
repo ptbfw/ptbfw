@@ -1,8 +1,11 @@
 Added support for internal Context files
 
+Example usage https://github.com/ptbfw/exampleProject
+
+
 Dev: dev use Initizlier extension
 
-V 0.1
+V 0.2
 
 !!! This version use integrated Init(er) !!!
 * mysql driver finished
