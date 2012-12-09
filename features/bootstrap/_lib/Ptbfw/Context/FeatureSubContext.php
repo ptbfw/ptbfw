@@ -1,6 +1,6 @@
 <?php
 
-namespace Ptbf\Context;
+namespace Ptbfw\Context;
 
 /**
  * All sub-contexts should extend this class

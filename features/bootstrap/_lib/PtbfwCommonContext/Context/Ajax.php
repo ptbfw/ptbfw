@@ -1,8 +1,8 @@
 <?php
 
-namespace PtbfCommonContext\Context;
+namespace PtbfwCommonContext\Context;
 
-class Ajax extends \Ptbf\Context\FeatureSubContext {
+class Ajax extends \Ptbfw\Context\FeatureSubContext {
 
 	/**
 	 * @Given /^I fill for suggestion in "([^"]*)" with "([^"]*)"$/                                                                                                                

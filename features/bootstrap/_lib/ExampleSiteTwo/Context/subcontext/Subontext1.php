@@ -2,9 +2,6 @@
 
 namespace siteTwo\subcontext;
 
-use Behat\Behat\Context\Step\Then,
-	Behat\Behat\Exception\UndefinedException;
-
 class Subontext1 extends \Behat\Behat\Context\BehatContext {
 
 	/**

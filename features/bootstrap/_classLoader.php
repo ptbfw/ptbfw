@@ -1,7 +1,7 @@
 <?php
 
 function ptbfAutoLoader($name) {
-	if (preg_match('/^\\\\?Ptbf\\\\/', $name)) {
+	if (preg_match('/^\\\\?Ptbfw\\\\/', $name)) {
 		$name = ltrim($name, '\\');
 		$name = preg_replace('/\\\\/', DIRECTORY_SEPARATOR, $name);
 
@@ -13,6 +13,3 @@ function ptbfAutoLoader($name) {
 }
 
 spl_autoload_register('ptbfAutoLoader');
-
-require_once 'PHPUnit/Framework/Assert/Functions.php';
-require_once 'PHPUnit/Autoload.php';

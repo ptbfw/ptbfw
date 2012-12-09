@@ -1,11 +1,8 @@
 <?php
 
-namespace Ptbf\Context;
+namespace Ptbfw\Context;
 
-use Behat\Behat\Event\SuiteEvent,
-	Behat\Behat\Event\FeatureEvent
-
-;
+use Behat\Behat\Event\SuiteEvent;
 
 /**
  * Description of FeatureContext
@@ -18,12 +15,18 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 
 	protected static $mink;
 	protected static $options = array();
+	private $contextDir = null;
 
 	function __construct($options) {
 		self::$options = $options;
 
 		// load all context files
 		if (isset($options['context_dir'])) {
+			if (!isset($options['context_dir_path'])) {
+				throw new \Exception('set option "context_dir_base_path" with full path to context dir');
+			}
+			$this->contextDir = rtrim($options['context_dir_path'], '/');
+			
 			foreach ($options['context_dir'] as $nameSpace => $directory) {
 				if (!preg_match('/^\\\\/', $nameSpace)) {
 					$nameSpace = '\\' . $nameSpace;
@@ -34,12 +37,15 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 				}
 
 				$finder = new \Symfony\Component\Finder\Finder();
-				$contextDir = __DIR__ . '/../../../' . $directory;
-				$contextDir = realpath($contextDir);
-				foreach ($finder->files()->name('*.php')->sortByName()->in($contextDir) as $file) {
+				$contextDir = $this->contextDir . '/' . $directory;
+				$contextDirReal = realpath($contextDir);
+				if (!$contextDirReal) {
+					throw new \Exception("{$contextDir} do not exist");
+				}
+				foreach ($finder->files()->name('*.php')->sortByName()->in($contextDirReal) as $file) {
 					/* @var $file \Symfony\Component\Finder\SplFileInfo */
 					$contextName = preg_replace('/\.php$/', '', $file->getFilename());
-					$relativePath = preg_replace('/^' . preg_quote($contextDir, '/') . '/', '', $file->getRealPath());
+					$relativePath = preg_replace('/^' . preg_quote($contextDirReal, '/') . '/', '', $file->getRealPath());
 					$relativePath = preg_replace('#/#', '\\', $relativePath);
 					$relativePath = ltrim($relativePath, '\\');
 					$contextName = preg_replace('/\.php$/', '', $relativePath);
@@ -57,7 +63,7 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 	public static function getMinkStatic() {
 		$mink = self::$mink;
 		if ($mink === NULL) {
-			$mink = new \Ptbf\Mink\Mink();
+			$mink = new \Ptbfw\Mink\Mink();
 			self::$mink = $mink;
 		}
 		return $mink;
@@ -130,7 +136,7 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 
 				$driver = new \Ptbfw\Selenium2Driver\Selenium2Driver();
 				//$session = new \Behat\Mink\Session($driver);
-				$session = new \Ptbf\Mink\Session($driver);
+				$session = new \Ptbfw\Mink\Session($driver);
 				$session->start();
 				$session->visit($options['base_url']);
 				$mink->registerSession($options['default_session'], $session);
@@ -172,8 +178,8 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 
 	/*
 	 * overriden for ajax-save
+	 * @TODO WTF IS THIS !??
 	 */
-
 	public function assertPageContainsText($text) {
 		try {
 			parent::assertPageContainsText($text);

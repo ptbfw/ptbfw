@@ -1,6 +1,6 @@
 <?php
 
-namespace Ptbf\Mink;
+namespace Ptbfw\Mink;
 
 class Session extends \Behat\Mink\Session{
 }

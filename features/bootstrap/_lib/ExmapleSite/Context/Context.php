@@ -1,6 +1,6 @@
 <?php
 
-class Context extends \Ptbf\Context\FeatureSubContext {
+class Context extends \Ptbfw\Context\FeatureSubContext {
 
 	/**
 	 * @Given /^test siteOne witch use main namespace$/ 

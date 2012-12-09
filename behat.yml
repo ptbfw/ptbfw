@@ -1,10 +1,11 @@
 default:
     context:
         parameters:
+            context_dir_path: '/var/www/ptbfw/features/bootstrap/'
             context_dir: 
               '\':           '_lib/ExmapleSite/Context'
               '\siteTwo\':  '_lib/ExampleSiteTwo/Context'
-              '\PtbfCommonContext\':  '_lib/PtbfCommonContext/'
+              '\PtbfwCommonContext\':  '_lib/PtbfwCommonContext/'
             
           
             base_url: 'http://google.com/'
@@ -46,7 +47,7 @@ default:
                 password: '1'
                 database: 'behatTwo'
                 directory: 'local_service_api'
-          test:
+          test_executer:
             type: 'Executer'
             commands:
               - "ls"
