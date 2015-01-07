@@ -1,7 +1,7 @@
 {
 	"name": "ptbfw/ptbfw",
 	"type": "framework",
-	"description": "wrapper of selenium2-driver",
+	"description": "wrapper of begat",
 	"minimum-stability" : "dev",
 	"require": {
 		"behat/behat": "2.5@stable",
