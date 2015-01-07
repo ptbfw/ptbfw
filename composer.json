@@ -4,7 +4,7 @@
 	"description": "wrapper of selenium2-driver",
 	"minimum-stability" : "dev",
 	"require": {
-		"behat/behat": "2.4@stable",
+		"behat/behat": "2.5@stable",
 		"behat/mink-extension": "*",
        
 		"fabpot/goutte":             "*",
