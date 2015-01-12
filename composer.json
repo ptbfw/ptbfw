@@ -2,17 +2,17 @@
 	"name": "ptbfw/ptbfw",
 	"type": "framework",
 	"description": "wrapper of begat",
-	"minimum-stability" : "dev",
+	"minimum-stability" : "stable",
 	"require": {
-		"behat/behat": "2.5.*@stable",
+		"behat/behat": "3.0.*",
 		"behat/mink-extension": "*",
        
 		"fabpot/goutte":             "*",
 		"behat/mink-goutte-driver":  "*",
-		"ptbfw/Selenium2-driver":    "master",
-		"ptbfw/initializer":         "*",
+		"ptbfw/Selenium2-driver":    "dev-master",
+		"ptbfw/initializer":         "dev-master",
 		
-		"phpUnit/phpUnit":           "*"
+		"phpUnit/phpUnit":           "4.*"
 	},
 	"autoload": {
 		"psr-0": {
