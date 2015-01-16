@@ -1,36 +1,5 @@
 Added support for internal Context files
 
-Example usage https://github.com/ptbfw/exampleProject
-
-
-Dev: dev use Initizlier extension
-
-V 0.2
-
-!!! This version use integrated Init(er) !!!
-* mysql driver finished
-Example config:
-db_init:
-    local_service:
-    type: 'mysql'
-    host: 'localhost'
-    user: 'behat'
-    password: '1'
-    database: 'behat'
-    port: 3306
-    directory: 'local'
-    init_command: 'SET NAMES "UTF8"'
-
-local_service -> name of servide, directory for *.sql files if ``directory`` is missing
-init_command -> command executed in PDO creation, optional
-port is optional
-directory is optional
-
-v 0.1
-* session options moved in .yml config
-* session options are: session name, host, port; check example behat.yml
-
-version 0.0
-project init
+Version 3 is compatible with behat v3
 
 po_taka's Behat FrameWork
