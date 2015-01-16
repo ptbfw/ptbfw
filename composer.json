@@ -11,7 +11,6 @@
 		"ptbfw/Selenium2-driver":    "1.0.*",
 		"ptbfw/initializer":         "1.0.*",
 		"phpUnit/phpUnit":           "4.*",
-		"ptbfw/Selenium2-driver":    "*",
 		"symfony/finder":            "2.*"
 	},
 	"autoload": {
