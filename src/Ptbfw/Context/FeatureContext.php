@@ -7,18 +7,16 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 
 /**
  * Description of FeatureContext
- * Here we will override some mink methods
- * basicly all CSS selectors wich return 1 element, should have founded exaclity 1 element
  * 
  * @author Angel Koilov <angel.koilov@gmail.com>
  */
 class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements \Ptbfw\Initializer\InitializerAwareInterface {
 
 	protected static $mink;
-	protected static $options = array();
+	protected $options;
 
-	function __construct($options) {
-		self::$options = $options;
+	public function __construct($options = array()) {
+		$this->options = $options;
 	}
     
 	public function getMink() {
@@ -38,9 +36,8 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 	 * @BeforeSuite
 	 */
 	public static function prepareSuite(BeforeSuiteScope $scope) {
-        $event = $scope->getSuite()->getSettings();
-		self::$options = $event;
-		$options = self::$options;
+        // nothing to do
+        // $event = $scope->getSuite()->getSettings();
 	}
 
 	/**
@@ -58,7 +55,7 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 	 */
 	private function sessionRestart() {
 
-		$options = self::$options;
+		$options = $this->options;
 		$mink = $this->getMink();
 		$mink->resetSessions();
 
@@ -111,7 +108,7 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 	 * @return type 
 	 */
 	public function getParameter($name) {
-		return self::$options[$name];
+		return $this->options[$name];
 	}
 
 	/**
@@ -126,20 +123,7 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 	 * used by Mink
 	 */
 	public function getParameters() {
-		return self::$options;
-	}
-
-	/*
-	 * overriden for ajax-save
-	 * @TODO WTF IS THIS !??
-	 */
-	public function assertPageContainsText($text) {
-		try {
-			parent::assertPageContainsText($text);
-		} catch (\Exception $e) {
-			$this->getSession()->wait(3000);
-			parent::assertPageContainsText($text);
-		}
+		return $this->options;
 	}
 
 }
