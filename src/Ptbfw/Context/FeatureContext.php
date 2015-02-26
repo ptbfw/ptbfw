@@ -19,19 +19,6 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 		$this->options = $options;
 	}
     
-	public function getMink() {
-		return self::getMinkStatic();
-	}
-
-	public static function getMinkStatic() {
-		$mink = self::$mink;
-		if ($mink === NULL) {
-			$mink = new \Ptbfw\Mink\Mink();
-			self::$mink = $mink;
-		}
-		return $mink;
-	}
-
 	/**
 	 * @BeforeSuite
 	 */
@@ -55,48 +42,8 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 	 */
 	private function sessionRestart() {
 
-		$options = $this->options;
 		$mink = $this->getMink();
 		$mink->resetSessions();
-
-		/**
-		 * Mink session if session name contains
-		 * 
-		 * mink
-		 * IE, internet, explorer
-		 * safari
-		 * chrom(e|ium)
-		 * opera
-		 * firefox
-		 */
-		if (preg_match('/(?:(mink|ie|firefox|chrom||safari|internet|explorer|opera))/i', $options['default_session'])) {
-            
-			if (false == $mink->hasSession($options['default_session'])) {
-				if (isset($sessionsOptions[$options['default_session']])) {
-					$currentSessionOptions = $sessionsOptions[$options['default_session']];
-					if (isset($currentSessionOptions['port'])) {
-						$port = $currentSessionOptions['port'];
-					} else {
-						$port = 4444;
-					}
-
-					$client = new \Selenium\Client($currentSessionOptions['host'], $port);
-				} else {
-					$client = null;
-				}
-
-				$driver = new \Ptbfw\Selenium2Driver\Selenium2Driver();
-				$session = new \Ptbfw\Mink\Session($driver);
-				$session->start();
-				$mink->registerSession($options['default_session'], $session);
-			}
-		} else {
-			throw new Exception('goutte session not implemented');
-			// @TODO
-		}
-        
-		$mink->setDefaultSessionName($options['default_session']);
-        $mink->getSession()->visit($options['base_url']);
 	}
 
 
