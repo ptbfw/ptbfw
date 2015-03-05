@@ -12,7 +12,6 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
  */
 class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements \Ptbfw\Initializer\InitializerAwareInterface {
 
-	protected static $mink;
 	protected $options;
 
 	public function __construct($options = array()) {
