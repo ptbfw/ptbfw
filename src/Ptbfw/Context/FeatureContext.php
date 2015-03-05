@@ -20,42 +20,14 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 	}
     
 	/**
-	 * @BeforeSuite
-	 */
-	public static function prepareSuite(BeforeSuiteScope $scope) {
-        // nothing to do
-        // $event = $scope->getSuite()->getSettings();
-	}
-
-	/**
 	 * 
 	 * Restore mink sessions from config
 	 * 
 	 * @BeforeScenario
 	 */
 	public function before(BeforeScenarioScope $scope) {
-		$this->sessionRestart();
-	}
-
-	/**
-	 * restart sessoins
-	 */
-	private function sessionRestart() {
-
 		$mink = $this->getMink();
 		$mink->resetSessions();
-	}
-
-
-
-	/**
-	 * used by Mink
-	 * 
-	 * @param type $name
-	 * @return type 
-	 */
-	public function getParameter($name) {
-		return $this->options[$name];
 	}
 
 	/**
@@ -64,13 +36,6 @@ class FeatureContext extends \Behat\MinkExtension\Context\MinkContext implements
 	 */
 	public function getPage() {
 		return $this->getSession()->getPage();
-	}
-
-	/**
-	 * used by Mink
-	 */
-	public function getParameters() {
-		return $this->options;
 	}
 
 }
